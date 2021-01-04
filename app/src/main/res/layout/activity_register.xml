@@ -46,7 +46,7 @@
         app:layout_constraintVertical_bias="0.261" />
 
     <Button
-        android:id="@+id/btnLogin"
+        android:id="@+id/btnRegister"
         android:layout_width="206dp"
         android:layout_height="64dp"
         android:fontFamily="@font/autour_one"
@@ -132,13 +132,13 @@
         android:id="@+id/txtAlreadyRegistered"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="96dp"
         android:fontFamily="@font/autour_one"
         android:text="Already registered? "
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/btnLogin"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="@+id/btnLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnLogin"
         app:layout_constraintVertical_bias="0.355" />
 

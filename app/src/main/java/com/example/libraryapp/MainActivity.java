@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
                         &&!txtPassword1.getText().toString().equals("")
                 ) {
                     Intent intent = new Intent(MainActivity.this, BooksActivity.class);
+                    finishAffinity();
                     startActivity(intent);
                 } else {
                     Toast.makeText(MainActivity.this, "Email or password missing", Toast.LENGTH_SHORT).show();

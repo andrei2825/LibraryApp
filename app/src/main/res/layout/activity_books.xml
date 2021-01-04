@@ -13,5 +13,32 @@
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="187dp"
         tools:layout_editor_absoluteY="161dp"
-        android:layout_margin="15dp"/>
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="45dp"/>
+
+    <EditText
+        android:id="@+id/txtSearchBar"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:background="#77FFFFFF"
+        android:ems="10"
+        android:hint="Search"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="@+id/booksRecView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/txtSearchBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/txtSearchBar"
+        app:layout_constraintTop_toTopOf="@+id/txtSearchBar"
+        app:layout_constraintVertical_bias="0.428"
+        app:srcCompat="?android:attr/actionModeWebSearchDrawable" />
 </androidx.constraintlayout.widget.ConstraintLayout>
