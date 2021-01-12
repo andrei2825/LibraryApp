@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="Home"
+        android:id="@+id/home"
+        android:icon="@drawable/ic_home"/>
+
+    <item
+        android:title="Profile"
+        android:id="@+id/profile"
+        android:icon="@drawable/ic_user"/>
+
+    <item
+        android:title="Finished books"
+        android:id="@+id/readBooks"
+        android:icon="@drawable/ic_baseline_collections_bookmark_24"/>
+
+    <item
+        android:title="Borrowed books"
+        android:id="@+id/borrowerBooks"
+        android:icon="@drawable/ic_baseline_book_24"/>
+
+    <item
+        android:title="Favorite books"
+        android:id="@+id/favoriteBooks"
+        android:icon="@drawable/ic_heart__full"/>
+
+    <item
+        android:title="Currently reading"
+        android:id="@+id/currentlyReadingBooks"
+        android:icon="@drawable/ic_reading"/>
+
+    <item
+        android:title="Wishlist"
+        android:id="@+id/wishlist"
+        android:icon="@drawable/ic_baseline_book_online_24"/>
+
+
+</menu>

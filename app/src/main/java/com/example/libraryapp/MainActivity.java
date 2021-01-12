@@ -20,11 +20,20 @@ public class MainActivity extends AppCompatActivity {
     private EditText txtPassword1;
     private ImageView imgLogo;
     private Button btnLogin;
+    private Button btnTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        btnTest = findViewById(R.id.btnTest);
+        btnTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+            }
+        });
 
         initViews();
 
@@ -42,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                         !txtEmail1.getText().toString().equals("")
                         &&!txtPassword1.getText().toString().equals("")
                 ) {
-                    Intent intent = new Intent(MainActivity.this, BooksActivity.class);
+                    Intent intent = new Intent(MainActivity.this, DrawerActivity.class);
                     finishAffinity();
                     startActivity(intent);
                 } else {
@@ -50,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        Utils.getInstance();
     }
     void initViews() {
         txtTitle = findViewById(R.id.txtTitle);

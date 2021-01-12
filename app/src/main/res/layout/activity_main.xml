@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@drawable/background">
+    android:background="@drawable/bookshelf">
 
     <TextView
         android:id="@+id/txtTitle"
@@ -116,6 +116,17 @@
         app:layout_constraintStart_toStartOf="@+id/txtNewAccount"
         app:layout_constraintTop_toBottomOf="@+id/txtNewAccount"
         app:layout_constraintVertical_bias="0.176" />
+
+    <Button
+        android:id="@+id/btnTest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

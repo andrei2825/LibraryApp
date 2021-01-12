@@ -7,4 +7,21 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="Action">#FF0000</color>
+    <color name="Adventure">#29BF00</color>
+    <color name="Classics">#A84923</color>
+    <color name="Comics">#FFEB3B</color>
+    <color name="Mystery">#1303A8</color>
+    <color name="Fantasy">#9A03A5</color>
+    <color name="Historical">#009688</color>
+    <color name="Horror">#532B2B</color>
+    <color name="Romance">#FF6DCE</color>
+    <color name="Science">#00D9FF</color>
+    <color name="SciFi">#4400FF</color>
+    <color name="Short_Stories">#28DA87</color>
+    <color name="Thrillers">#830000</color>
+
+
+
 </resources>
