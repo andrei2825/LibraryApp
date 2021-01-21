@@ -21,6 +21,7 @@ public class BookActivity extends AppCompatActivity {
     private TextView txtBookTitle, txtBookStatus, txtDescTitle, txtDescription;
     private ImageView imgBookCover;
     private FloatingActionButton btnReserve;
+    private FloatingActionButton btnWishlist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,14 +29,6 @@ public class BookActivity extends AppCompatActivity {
         setContentView(R.layout.activity_book);
 
         initViews();
-
-//        Book book = new Book(1, "Carrie", "Stephen King", 300,
-//                "https://images-na.ssl-images-amazon.com/images/I/51Tfl0+Bn2L._SX324_BO1,204,203,200_.jpg",
-//                "Carrie is an epistolary horror novel by American author Stephen King",
-//                "Carrie was his first published novel, released on April 5, 1974, with a " +
-//                        "first print-run of 30,000 copies.[1] Set primarily in the then-future year of 1979, " +
-//                        "it revolves around the eponymous Carrie White, an unpopular friendless misfit and bullied " +
-//                        "high-school girl from an abusive religious household.");
 
         Intent intent = getIntent();
         if (null != intent) {
@@ -45,32 +38,73 @@ public class BookActivity extends AppCompatActivity {
                 if (null != incomingBook) {
                     setData(incomingBook);
 
-                    handleAlreadyRead(incomingBook);
+                    handleReserveButton(incomingBook);
+                    handleWishListButton(incomingBook);
                 }
             }
         }
     }
 
-    private void handleAlreadyRead(Book book) {
-        ArrayList<Book> alreadyReadBooks = Utils.getInstance().getAlreadyReadBooks();
+    private void handleWishListButton(Book book) {
+        ArrayList<Book> wantToReadBooks = Utils.getWantToReadBooks();
+
+        boolean existInWantToReadBooks = false;
+
+        for (Book b : wantToReadBooks) {
+            if (b.getId() == book.getId()) {
+                existInWantToReadBooks = true;
+                break;
+            }
+        }
+
+        if (existInWantToReadBooks) {
+            btnWishlist.setEnabled(false);
+        } else {
+            btnWishlist.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (Utils.getInstance().addToWishlist(book)) {
+                        Toast.makeText(BookActivity.this, "Book added to WishList", Toast.LENGTH_SHORT).show();
+                        btnWishlist.setEnabled(false);
+                    } else {
+                        Toast.makeText(BookActivity.this, "Something wrong happened, try again.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+    }
+
+    private void handleReserveButton(Book book) {
+        ArrayList<Book> alreadyReadBooks = Utils.getAlreadyReadBooks();
+        ArrayList<Book> reservedBooks = Utils.getReservedBooks();
 
         boolean existInAlreadyReadBooks = false;
+        boolean existInReservedBooks = false;
 
         for (Book b : alreadyReadBooks) {
             if (b.getId() == book.getId()) {
                 existInAlreadyReadBooks = true;
+                break;
             }
         }
 
-        if (existInAlreadyReadBooks == true) {
+        for (Book b : reservedBooks) {
+            if (b.getId() == book.getId()) {
+                existInReservedBooks = true;
+                break;
+            }
+        }
+
+        if (existInAlreadyReadBooks || existInReservedBooks) {
             btnReserve.setEnabled(false);
         } else {
             btnReserve.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (Utils.getInstance().addToAlreadyRead(book)) {
+                    if (Utils.getInstance().addToReserved(book)) {
                         //TODO creaza popup window pentru imprumut
-                        Toast.makeText(BookActivity.this, "Book Added", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(BookActivity.this, ReservedBooksActivity.class);
+                        startActivity(intent);
                     } else {
                         Toast.makeText(BookActivity.this, "Something wrong happened, try again.", Toast.LENGTH_SHORT).show();
                     }
@@ -95,5 +129,6 @@ public class BookActivity extends AppCompatActivity {
         txtDescription = findViewById(R.id.txtReadDescription);
         imgBookCover = findViewById(R.id.imgReadBookCover);
         btnReserve = findViewById(R.id.btnReserve);
+        btnWishlist = findViewById(R.id.btnWishlist);
     }
 }

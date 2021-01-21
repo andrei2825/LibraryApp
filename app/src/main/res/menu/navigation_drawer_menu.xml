@@ -12,6 +12,11 @@
         android:icon="@drawable/ic_user"/>
 
     <item
+        android:title="Reserved books"
+        android:id="@+id/reservedBooks"
+        android:icon="@drawable/ic_baseline_shopping_basket_24"/>
+
+    <item
         android:title="Finished books"
         android:id="@+id/readBooks"
         android:icon="@drawable/ic_baseline_collections_bookmark_24"/>
@@ -19,17 +24,12 @@
     <item
         android:title="Borrowed books"
         android:id="@+id/borrowerBooks"
-        android:icon="@drawable/ic_baseline_book_24"/>
+        android:icon="@drawable/ic_reading"/>
 
     <item
         android:title="Favorite books"
         android:id="@+id/favoriteBooks"
         android:icon="@drawable/ic_heart__full"/>
-
-    <item
-        android:title="Currently reading"
-        android:id="@+id/currentlyReadingBooks"
-        android:icon="@drawable/ic_reading"/>
 
     <item
         android:title="Wishlist"

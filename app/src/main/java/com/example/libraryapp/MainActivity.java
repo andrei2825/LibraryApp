@@ -20,20 +20,11 @@ public class MainActivity extends AppCompatActivity {
     private EditText txtPassword1;
     private ImageView imgLogo;
     private Button btnLogin;
-    private Button btnTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        btnTest = findViewById(R.id.btnTest);
-        btnTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ProfileActivity.class));
-            }
-        });
 
         initViews();
 
