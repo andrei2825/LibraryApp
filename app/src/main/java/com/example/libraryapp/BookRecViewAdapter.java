@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.example.libraryapp.BookActivity.BOOK_ID_KEY;
 
@@ -25,15 +26,12 @@ import static com.example.libraryapp.BookActivity.BOOK_ID_KEY;
 
     private static final String TAG = "BookRecViewAdapter";
     
-    private ArrayList<Book> books = new ArrayList<>();
+    private List<GetBooks> books = new ArrayList<>();
     private Context mContext;
 
     public BookRecViewAdapter(Context mContext) {
         this.mContext = mContext;
     }
-
-
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -45,10 +43,10 @@ import static com.example.libraryapp.BookActivity.BOOK_ID_KEY;
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: Called");
-        holder.txtName.setText(books.get(position).getName());
+        holder.txtName.setText(books.get(position).getTitle());
         Glide.with(mContext)
                 .asBitmap()
-                .load(books.get(position).getImageUrl())
+                .load(books.get(position).getCoverUrl())
                 .into(holder.imgBook);
 
         holder.parent.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +64,7 @@ import static com.example.libraryapp.BookActivity.BOOK_ID_KEY;
         return books.size();
     }
 
-    public void setBooks(ArrayList<Book> books) {
+    public void setBooks(List<GetBooks> books) {
         this.books = books;
         notifyDataSetChanged();
     }

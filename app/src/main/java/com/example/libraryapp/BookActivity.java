@@ -13,6 +13,13 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BookActivity extends AppCompatActivity {
 
@@ -22,25 +29,102 @@ public class BookActivity extends AppCompatActivity {
     private ImageView imgBookCover;
     private FloatingActionButton btnReserve;
     private FloatingActionButton btnWishlist;
+    private ServerApi serverApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book);
 
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://simple-express-server-3nkkx.ondigitalocean.app")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        serverApi = retrofit.create(ServerApi.class);
+
         initViews();
 
+
+
+//        getBooks();
+        getBook();
+
+    }
+
+    private void getBooks(){
+        Call<List<GetBooks>> call = serverApi.getBooks();
+        call.enqueue(new Callback<List<GetBooks>>() {
+            @Override
+            public void onResponse(Call<List<GetBooks>> call, Response<List<GetBooks>> response) {
+                if (!response.isSuccessful()) {
+                    txtBookTitle.setText("Code: " + response.code());
+                    return;
+                }
+                Intent intent = getIntent();
+                if (null != intent) {
+                    int bookId = intent.getIntExtra(BOOK_ID_KEY,  -1);
+                    if (bookId != -1) {
+                        List<GetBooks> getBooks = response.body();
+                        for (GetBooks bookIterator : getBooks) {
+                            if (bookIterator.getId() == bookId) {
+                                Toast.makeText(BookActivity.this, "id " + bookId, Toast.LENGTH_SHORT).show();
+                                if (null != bookIterator) {
+                                    txtBookTitle.setText(bookIterator.getTitle());
+                                    txtDescription.setText(bookIterator.getDescription());
+                                    Glide.with(getApplicationContext())
+                                            .asBitmap().load(bookIterator.getCoverUrl())
+                                            .into(imgBookCover);
+
+                                    //handleReserveButton(incomingBook);
+                                    //handleWishListButton(incomingBook);
+                                }
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<GetBooks>> call, Throwable t) {
+                txtBookTitle.setText(t.getMessage());
+            }
+        });
+    }
+
+    private void getBook() {
         Intent intent = getIntent();
         if (null != intent) {
             int bookId = intent.getIntExtra(BOOK_ID_KEY,  -1);
             if (bookId != -1) {
-                Book incomingBook = Utils.getInstance().getBookById(bookId);
-                if (null != incomingBook) {
-                    setData(incomingBook);
+                Call<List<GetBooks>> call = serverApi.getBook(bookId);
+                call.enqueue(new Callback<List<GetBooks>>() {
+                    @Override
+                    public void onResponse(Call<List<GetBooks>> call, Response<List<GetBooks>> response) {
+                        if (!response.isSuccessful()) {
+                            txtBookTitle.setText("Code: " + response.code());
+                            return;
+                        }
 
-                    handleReserveButton(incomingBook);
-                    handleWishListButton(incomingBook);
-                }
+                        List<GetBooks> incomingBook = response.body();
+                        if (null != incomingBook) {
+                            txtBookTitle.setText(incomingBook.get(0).getTitle());
+                            txtDescription.setText(incomingBook.get(0).getDescription());
+                            Glide.with(getApplicationContext())
+                                    .asBitmap().load(incomingBook.get(0).getCoverUrl())
+                                    .into(imgBookCover);
+
+                            //handleReserveButton(incomingBook);
+                            //handleWishListButton(incomingBook);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<GetBooks>> call, Throwable t) {
+                        txtBookTitle.setText(t.getMessage());
+                    }
+                });
             }
         }
     }
@@ -114,12 +198,7 @@ public class BookActivity extends AppCompatActivity {
     }
 
     private void setData(Book book) {
-        txtBookTitle.setText(book.getName());
-        txtDescription.setText(book.getLongDesc());
-        //TODO: status
-        Glide.with(this)
-                .asBitmap().load(book.getImageUrl())
-                .into(imgBookCover);
+
     }
 
     void initViews() {

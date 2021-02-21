@@ -22,7 +22,7 @@ public class ReservedBooksActivity extends AppCompatActivity {
         bookRecView.setLayoutManager(new GridLayoutManager(this, 2));
 
 
-        adapter.setBooks(Utils.getReservedBooks());
+        //adapter.setBooks(Utils.getReservedBooks());
     }
 
     @Override

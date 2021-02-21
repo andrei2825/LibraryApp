@@ -52,7 +52,7 @@ public class Utils {
                         "it follows Harry Potter, a young wizard who discovers his magical heritage " +
                         "on his eleventh birthday, when he receives a letter of acceptance to " +
                         "Hogwarts School of Witchcraft and Wizardry."));
-        allBooks.add(new Book(2, "Harry Potter and the Sorcerer's Stone", "J. K. Rowling", 350,
+        allBooks.add(new Book(3, "Harry Potter and the Sorcerer's Stone", "J. K. Rowling", 350,
                 "https://images-na.ssl-images-amazon.com/images/I/81iqZ2HHD-L.jpg",
                 "Harry Potter and the Philosopher's Stone is a fantasy novel" +
                         " written by British author J. K. Rowling.",
@@ -60,7 +60,7 @@ public class Utils {
                         "it follows Harry Potter, a young wizard who discovers his magical heritage " +
                         "on his eleventh birthday, when he receives a letter of acceptance to " +
                         "Hogwarts School of Witchcraft and Wizardry."));
-        allBooks.add(new Book(2, "Harry Potter and the Sorcerer's Stone", "J. K. Rowling", 350,
+        allBooks.add(new Book(4, "Harry Potter and the Sorcerer's Stone", "J. K. Rowling", 350,
                 "https://images-na.ssl-images-amazon.com/images/I/81iqZ2HHD-L.jpg",
                 "Harry Potter and the Philosopher's Stone is a fantasy novel" +
                         " written by British author J. K. Rowling.",
@@ -68,7 +68,7 @@ public class Utils {
                         "it follows Harry Potter, a young wizard who discovers his magical heritage " +
                         "on his eleventh birthday, when he receives a letter of acceptance to " +
                         "Hogwarts School of Witchcraft and Wizardry."));
-        allBooks.add(new Book(2, "Harry Potter and the Sorcerer's Stone", "J. K. Rowling", 350,
+        allBooks.add(new Book(5, "Harry Potter and the Sorcerer's Stone", "J. K. Rowling", 350,
                 "https://images-na.ssl-images-amazon.com/images/I/81iqZ2HHD-L.jpg",
                 "Harry Potter and the Philosopher's Stone is a fantasy novel" +
                         " written by British author J. K. Rowling.",
@@ -76,7 +76,7 @@ public class Utils {
                         "it follows Harry Potter, a young wizard who discovers his magical heritage " +
                         "on his eleventh birthday, when he receives a letter of acceptance to " +
                         "Hogwarts School of Witchcraft and Wizardry."));
-        allBooks.add(new Book(2, "Harry Potter and the Sorcerer's Stone", "J. K. Rowling", 350,
+        allBooks.add(new Book(6, "Harry Potter and the Sorcerer's Stone", "J. K. Rowling", 350,
                 "https://images-na.ssl-images-amazon.com/images/I/81iqZ2HHD-L.jpg",
                 "Harry Potter and the Philosopher's Stone is a fantasy novel" +
                         " written by British author J. K. Rowling.",
@@ -84,7 +84,7 @@ public class Utils {
                         "it follows Harry Potter, a young wizard who discovers his magical heritage " +
                         "on his eleventh birthday, when he receives a letter of acceptance to " +
                         "Hogwarts School of Witchcraft and Wizardry."));
-        allBooks.add(new Book(2, "Harry Potter and the Sorcerer's Stone", "J. K. Rowling", 350,
+        allBooks.add(new Book(7, "Harry Potter and the Sorcerer's Stone", "J. K. Rowling", 350,
                 "https://images-na.ssl-images-amazon.com/images/I/81iqZ2HHD-L.jpg",
                 "Harry Potter and the Philosopher's Stone is a fantasy novel" +
                         " written by British author J. K. Rowling.",
@@ -92,7 +92,7 @@ public class Utils {
                         "it follows Harry Potter, a young wizard who discovers his magical heritage " +
                         "on his eleventh birthday, when he receives a letter of acceptance to " +
                         "Hogwarts School of Witchcraft and Wizardry."));
-        allBooks.add(new Book(2, "Harry Potter and the Sorcerer's Stone", "J. K. Rowling", 350,
+        allBooks.add(new Book(8, "Harry Potter and the Sorcerer's Stone", "J. K. Rowling", 350,
                 "https://images-na.ssl-images-amazon.com/images/I/81iqZ2HHD-L.jpg",
                 "Harry Potter and the Philosopher's Stone is a fantasy novel" +
                         " written by British author J. K. Rowling.",

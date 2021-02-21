@@ -35,12 +35,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (
                         !txtEmail1.getText().toString().equals("")
-                        &&!txtPassword1.getText().toString().equals("")
+                        && !txtPassword1.getText().toString().equals("")
                 ) {
                     Intent intent = new Intent(MainActivity.this, DrawerActivity.class);
                     finishAffinity();

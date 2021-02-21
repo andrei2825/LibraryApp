@@ -8,8 +8,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -22,6 +31,8 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText txtConfirmPassword;
     private ImageView imgLogo;
     private Button btnRegister;
+    private ServerApi serverApi;
+    private int status = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +40,13 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         initViews();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://simple-express-server-3nkkx.ondigitalocean.app")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        serverApi = retrofit.create(ServerApi.class);
+
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,9 +63,16 @@ public class RegisterActivity extends AppCompatActivity {
                             && !txtPassword.getText().toString().equals("")
                             && !txtConfirmPassword.getText().toString().equals("")
                     ) {
-                        Intent intent = new Intent(RegisterActivity.this, BooksActivity.class);
-                        finishAffinity();
-                        startActivity(intent);
+                        dataCheck(
+                                txtUsername.getText().toString(),
+                                txtEmail.getText().toString(),
+                                txtPassword.getText().toString());
+                        if (status == 1) {
+                            Toast.makeText(RegisterActivity.this, "merge", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(RegisterActivity.this, BooksActivity.class);
+                            finishAffinity();
+                            startActivity(intent);
+                        }
                     } else {
                         Toast.makeText(RegisterActivity.this, "Complete all fields.", Toast.LENGTH_SHORT).show();
                     }
@@ -63,6 +88,60 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private void  dataCheck(String username, String email, String password) {
+        Call<List<User>> call = serverApi.getUsers();
+        call.enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(RegisterActivity.this, "Code: " + response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                int check = 0;
+                List<User> users = response.body();
+                for (User user : users) {
+                    if (user.getName().equals(username)) {
+                        check = 1;
+                        break;
+                    } else if (user.getEmail().equals(email)) {
+                        check = 1;
+                        break;
+                    }
+                }
+                if (check == 0) {
+                    createAccount(username, email, password);
+                    status = 1;
+                } else {
+                    txtUsername.setText("");
+                    txtEmail.setText("");
+                    txtPassword.setText("");
+                    txtConfirmPassword.setText("");
+                    Toast.makeText(RegisterActivity.this, "Username or email already used", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+            }
+        });
+    }
+
+    private void createAccount(String username, String email, String password) {
+        PostRegister postRegister = new PostRegister(username, "https://i.etsystatic.com/14449774/r/il/98b65a/1912380365/il_570xN.1912380365_2xo7.jpg", email, password);
+        Call<PostRegister> call = serverApi.createAccount(postRegister);
+        call.enqueue(new Callback<PostRegister>() {
+            @Override
+            public void onResponse(Call<PostRegister> call, Response<PostRegister> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(RegisterActivity.this, "Code: " + response.code(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PostRegister> call, Throwable t) {
+            }
+        });
     }
 
     void initViews() {

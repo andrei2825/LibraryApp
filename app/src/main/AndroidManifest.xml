@@ -11,7 +11,7 @@
         android:roundIcon="@drawable/ic_launcher_background"
         android:supportsRtl="true"
         android:theme="@style/Theme.LibraryApp">
-        <activity android:name=".DrawerActivity"></activity>
+        <activity android:name=".DrawerActivity" />
         <activity android:name=".ReservedBooksActivity" />
         <activity android:name=".ReadBookActivity" />
         <activity android:name=".ProfileActivity" />
