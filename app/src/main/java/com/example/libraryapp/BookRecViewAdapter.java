@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,10 +28,12 @@ import static com.example.libraryapp.BookActivity.BOOK_ID_KEY;
     private static final String TAG = "BookRecViewAdapter";
     
     private List<GetBooks> books = new ArrayList<>();
+    List<GetBooks> filteredBooks = new ArrayList<>();
     private Context mContext;
 
     public BookRecViewAdapter(Context mContext) {
         this.mContext = mContext;
+        this.filteredBooks = filteredBooks;
     }
     @NonNull
     @Override
@@ -43,10 +46,10 @@ import static com.example.libraryapp.BookActivity.BOOK_ID_KEY;
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: Called");
-        holder.txtName.setText(books.get(position).getTitle());
+        holder.txtName.setText(filteredBooks.get(position).getTitle());
         Glide.with(mContext)
                 .asBitmap()
-                .load(books.get(position).getCoverUrl())
+                .load(filteredBooks.get(position).getCoverUrl())
                 .into(holder.imgBook);
 
         holder.parent.setOnClickListener(new View.OnClickListener() {
@@ -61,11 +64,12 @@ import static com.example.libraryapp.BookActivity.BOOK_ID_KEY;
 
     @Override
     public int getItemCount() {
-        return books.size();
+        return filteredBooks.size();
     }
 
     public void setBooks(List<GetBooks> books) {
         this.books = books;
+        this.filteredBooks = books;
         notifyDataSetChanged();
     }
 
@@ -80,4 +84,36 @@ import static com.example.libraryapp.BookActivity.BOOK_ID_KEY;
             txtName = itemView.findViewById(R.id.txtBookName);
         }
     }
+
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String key = constraint.toString();
+                if (key.isEmpty()) {
+                    filteredBooks = books;
+                } else {
+                    List<GetBooks> listFiltered = new ArrayList<>();
+                    for (GetBooks book : books) {
+                        if (book.getTitle().toLowerCase().contains(key.toLowerCase())) {
+                            listFiltered.add(book);
+                        }
+                    }
+                    filteredBooks = listFiltered;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = filteredBooks;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                filteredBooks = (List<GetBooks>)results.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+
+
+
 }

@@ -2,47 +2,85 @@ package com.example.libraryapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class ReadBookActivity extends AppCompatActivity {
+
+    public static final String BOOK_ID_KEY = "bookId";
 
     private TextView txtReadBookTitle, txtReadDescTitle, txtReadDescription;
     private ImageView imgReadBookCover;
     private RatingBar ratingReadBook;
     private CheckBox checkBoxFavorite;
+    private ServerApi serverApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_book);
 
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://simple-express-server-3nkkx.ondigitalocean.app")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        serverApi = retrofit.create(ServerApi.class);
         initView();
-
-
-        Book book = new Book(1, "Carrie", "Stephen King", 300,
-                "https://images-na.ssl-images-amazon.com/images/I/51Tfl0+Bn2L._SX324_BO1,204,203,200_.jpg",
-                "Carrie is an epistolary horror novel by American author Stephen King",
-                "Carrie was his first published novel, released on April 5, 1974, with a " +
-                        "first print-run of 30,000 copies.[1] Set primarily in the then-future year of 1979, " +
-                        "it revolves around the eponymous Carrie White, an unpopular friendless misfit and bullied " +
-                        "high-school girl from an abusive religious household.");
-        setData(book);
+        getBook();
     }
 
-    private void setData(Book book) {
-        txtReadBookTitle.setText(book.getName());
-        txtReadDescription.setText(book.getLongDesc());
-        //TODO: status
-        Glide.with(this)
-                .asBitmap().load(book.getImageUrl())
-                .into(imgReadBookCover);
+    private void getBook() {
+        Intent intent = getIntent();
+        if (null != intent) {
+            String bookTitle = intent.getStringExtra(BOOK_ID_KEY);
+            if (bookTitle != null) {
+                Call<List<GetBooks>> call = serverApi.getBooks();
+                call.enqueue(new Callback<List<GetBooks>>() {
+                    @Override
+                    public void onResponse(Call<List<GetBooks>> call, Response<List<GetBooks>> response) {
+                        if (!response.isSuccessful()) {
+                            Toast.makeText(ReadBookActivity.this, "Code:" + response.code(), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+
+                        List<GetBooks> incomingBooks = response.body();
+                        if (null != incomingBooks) {
+                            for (GetBooks book : incomingBooks) {
+                                if (book.getTitle().equals(bookTitle)) {
+                                    txtReadBookTitle.setText(book.getTitle());
+                                    txtReadDescription.setText(book.getDescription());
+                                    Glide.with(getApplicationContext())
+                                        .asBitmap().load(book.getCoverUrl())
+                                        .into(imgReadBookCover);
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<GetBooks>> call, Throwable t) {
+                        Toast.makeText(ReadBookActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }
     }
 
     void initView() {

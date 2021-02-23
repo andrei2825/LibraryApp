@@ -22,9 +22,21 @@ public interface ServerApi {
     @GET("/api/user/{id}")
     Call<List<User>> getUser(@Path("id") int userId);
 
+    @GET("/api/list/finished/{id}")
+    Call<List<GetBooks>> getFinishedBooks(@Path("id") int userId);
+
+    @GET("/api/wishlists")
+    Call<List<GetWishList>> getWishLists();
+
+    @GET("/api/list/wishlisted/{id}")
+    Call<List<GetBooks>> getWishList(@Path("id") int userId);
+
     @POST("/api/register")
     Call<PostRegister> createAccount(@Body PostRegister postRegister);
 
     @POST("/api/login")
-    Call<PostLogin> loginAccount(@Body PostLogin postLogin);
+    Call<User> loginAccount(@Body User user);
+
+    @POST("/api/wishlist")
+    Call<PostWishlist> addToWishList(@Body PostWishlist postWishlist);
 }

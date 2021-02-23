@@ -11,13 +11,13 @@
         android:roundIcon="@drawable/ic_launcher_background"
         android:supportsRtl="true"
         android:theme="@style/Theme.LibraryApp">
+        <activity android:name=".RegisterTestActivity"></activity>
         <activity android:name=".DrawerActivity" />
         <activity android:name=".ReservedBooksActivity" />
         <activity android:name=".ReadBookActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".BookActivity" />
         <activity android:name=".BooksActivity" />
-        <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

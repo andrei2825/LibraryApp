@@ -14,8 +14,19 @@
     <string name="profile">Profile</string>
     <string name="my_books">My Books</string>
     <string name="settings">Settings</string>
-    <string name="read_books">Read Books</string>
+    <string name="read_books">Finished Books</string>
     <string name="my_library">My Library</string>
     <string name="drawer_open">drawer_open</string>
     <string name="drawer_close">drawer_close</string>
+    <string name="sign_in">Sign In</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="sign_up">Sign up</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="my_library_name">MY LIBRARY</string>
+    <string name="register">Register</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="email">Email</string>
+    <string name="already_registered">Already registered?</string>
+    <string name="sign_in_btn">Sign in</string>
 </resources>

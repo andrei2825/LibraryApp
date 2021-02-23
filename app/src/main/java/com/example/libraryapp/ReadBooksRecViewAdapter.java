@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -17,12 +16,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import static com.example.libraryapp.BookActivity.BOOK_ID_KEY;
 
 public class ReadBooksRecViewAdapter extends RecyclerView.Adapter<ReadBooksRecViewAdapter.ViewHolder>{
 
     private static final String TAG = "ReadBooksRecViewAdapter";
     
-    private ArrayList<Book> readBooks = new ArrayList<>();
+    private List<GetBooks> readBooks = new ArrayList<>();
     private Context mContext;
 
     public ReadBooksRecViewAdapter(Context mContext) {
@@ -40,16 +42,17 @@ public class ReadBooksRecViewAdapter extends RecyclerView.Adapter<ReadBooksRecVi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: Called");
-        holder.txtName.setText(readBooks.get(position).getName());
+        holder.txtName.setText(readBooks.get(position).getTitle());
         Glide.with(mContext)
                 .asBitmap()
-                .load(readBooks.get(position).getImageUrl())
+                .load(readBooks.get(position).getCoverUrl())
                 .into(holder.imgBook);
 
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, ReadBookActivity.class);
+                intent.putExtra(BOOK_ID_KEY, readBooks.get(position).getTitle());
                 mContext.startActivity(intent);
             }
         });
@@ -60,7 +63,7 @@ public class ReadBooksRecViewAdapter extends RecyclerView.Adapter<ReadBooksRecVi
         return readBooks.size();
     }
 
-    public void setReadBooks(ArrayList<Book> readBooks) {
+    public void setReadBooks(List<GetBooks> readBooks) {
         this.readBooks = readBooks;
         notifyDataSetChanged();
     }

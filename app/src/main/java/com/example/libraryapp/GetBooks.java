@@ -8,6 +8,7 @@ public class GetBooks {
     private String CoverUrl;
     private int Genre;
     private int Rating;
+    private String Type;
 
     public int getId() {
         return Id;
@@ -35,5 +36,9 @@ public class GetBooks {
 
     public int getRating() {
         return Rating;
+    }
+
+    public String getType() {
+        return Type;
     }
 }
